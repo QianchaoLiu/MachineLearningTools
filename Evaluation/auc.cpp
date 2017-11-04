@@ -56,13 +56,13 @@ int main(){
    double repeating_rank_sums; // summation of rank for previous repeating sequence
    label_scores.push_back(label_score("dummy", -1)); //dummy node at the end 
 
-    // update positive_rank
+   
    for(auto sample:label_scores){
+      // update positive_rank
    	if(sample.score==prev){
    		prev_score_same = 1;
    		repeating_rank_sums += rank;
    	}else{
-
    		if(prev_score_same==1){
    			positive_rank += repeating_rank_sums*last_positive_num/prev_seq_len;
    		}else{
@@ -70,18 +70,18 @@ int main(){
    				positive_rank += repeating_rank_sums;
    			}
    		}
-		repeating_rank_sums = rank;
+		   repeating_rank_sums = rank;
    		prev_seq_len = 0;
    		prev_score_same = 0;
    		last_positive_num = 0;
    	}
 
-   	// updata P and N
+   	// update P and N
    	prev_seq_len++;
-   	if(sample.label == "1"){
+   	if(sample.label == "1" || sample.label == "+1"){
    		P++;
    		last_positive_num++;
-   	}else if(sample.label == "0"){
+   	}else if(sample.label == "0" || sample.label == "-1"){
    		N++;
    	}else if(sample.label == "dummy"){}
    	else
