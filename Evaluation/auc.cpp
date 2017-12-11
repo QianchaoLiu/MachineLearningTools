@@ -3,6 +3,7 @@
 #include <sstream> // std:stringstream
 #include <vector> // std:vector
 #include <string> //std:stod
+#include <exception>
 
 using namespace std;
 
@@ -18,6 +19,13 @@ struct label_score
 	bool operator>(const label_score& obj) const{
 		return score > obj.score;
 	}
+};
+
+struct FormatException: public exception
+{
+   const char* what() const throw(){
+      return "label format error!";
+   }
 };
 
 inline void split(const string &str, vector<string> &rst, const char clim=';'){
@@ -86,8 +94,7 @@ int main(){
    	}else if(sample.label == "dummy"){}
    	else
    	{
-   		cout << "label format error!" << endl;
-   		exit(0);
+   		throw FormatException();
    	}
 
    	// update prev and rank
